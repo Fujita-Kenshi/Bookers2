@@ -1,0 +1,59 @@
+<div class="container px-5 px-sm-0">
+    <div id="error_explanation">
+        <% if @book.errors.any? %>
+            <h3>
+                <%= @book.errors.count %> error prohibited this obj from being saved:
+            </h3>
+            <ul>
+                <% @book.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+            </ul>
+        <% end %>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <%= image_tag current_user.get_profile_image(100,100) %>
+            <h2>User info</h2>
+            <table class="table">
+                <tr>
+                    <th>name</th>
+                    <th><%= current_user.name %></th>
+                </tr>
+                <tr>
+                    <th>introduction</th>
+                    <th><%= current_user.introduction %></th>
+                </tr>
+            </table>
+            <div class="row">
+                <%= link_to edit_user_path(current_user.id), class:"btn btn-outline-secondary btn-block" do %>
+                    <i class="fas fa-user-cog"></i>
+                <% end %>
+            </div>
+            <!-- New book -->
+            <%= render 'books_list', book: @book %>
+        </div>
+        <div class="col-md-8 offset-md-1">
+            <h2>Books</h2>
+            <table class="table table-hover table-inverse">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Title</th>
+                        <th>Opinion</th>
+                        <th colspan="3"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @books.each do |book| %>
+                    <tr>
+                        <td><%= link_to (image_tag book.user.get_profile_image(100,100)), user_path(book) %></td>
+                        <td><%= link_to book.title, book_path(book) %></td>
+                        <td><%= book.body %></td>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
